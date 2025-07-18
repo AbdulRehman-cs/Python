@@ -45,24 +45,31 @@ root.mainloop()
 
 # or if no needed gui stepup
 
-# Comment out or remove this part if you don't want GUI:
+# Comment out or remove this part if you don't want GUI and also tkinter:
 # root = tk.Tk()
 # ...
+ 
+import requests
 
-def get_weather_console(city):
-    api_key = "YOUR_API_KEY_HERE"
-    url = f"http://api.weatherapi.com/v1/current.json?key={api_key}&q={city}"
+def get_weather_console(location):
+    api_key = "api key here"
+    url = f"http://api.weatherapi.com/v1/current.json?key={api_key}&q={location}"
     response = requests.get(url)
     data = response.json()
     if "location" in data:
-        location = data["location"]["name"]
+        loc_name = data["location"]["name"]
         country = data["location"]["country"]
         temp = data["current"]["temp_c"]
         condition = data["current"]["condition"]["text"]
-        print(f"📍 {location}, {country}")
+        print(f"📍 {loc_name}, {country}")
         print(f"🌡️ Temp: {temp}°C")
         print(f"🌥️ Condition: {condition}")
     else:
-        print("❌ City not found or API issue.")
+        print("❌ Location not found or API issue.")
+
+if __name__ == "__main__":
+    user_input = input("Enter city or country name: ")
+    get_weather_console(user_input)
+
 
 
